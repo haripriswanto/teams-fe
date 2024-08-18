@@ -7,6 +7,8 @@ function getData() {
     dataType: "json",
     data: {},
     success: function (result) {
+      // console.log(result.data.total);
+      
       if (result.success == true) {
         let data = result.data.data;
         $.each(data, function (i, data) {
@@ -19,12 +21,12 @@ function getData() {
             </tr>`
           );
         });
-      } else {
-        $("#data-table").html(`
-                <tr colspan="4">
-                    <td>Data Not Found</td>
-                </tr>
-            `);
+      } else if (result.success == true && result.data.total == 0) {
+        $("#data-table").append(
+          `<tr colspan="4">
+              <td>Data Not Found</td>
+            </tr>
+          `);
       }
     },
   });
@@ -139,11 +141,11 @@ function insertDataTimPegawai() {
     let peg_id = $('#selectPegawai').val();
     let tim_id = $('#selectTim').val();
 
-    if (peg_id === '') {
+    if (peg_id == '') {
         toastr.error("Pegawai wajib dipilih", "Failed")
         $('#selectPegawai').focus();
     }
-    else if (tim_id === '') {
+    else if (tim_id == '') {
         toastr.error("Tim wajib dipilih", "Failed")
         $('#selectTim').focus();
     }
@@ -174,7 +176,9 @@ function insertDataTimPegawai() {
 // function for Delete Tim
 function deleteDataTim(id) {
     // console.log(id);
-    if (id != '') {     
+    var confirmation = confirm("Anda yakin ingin menghapus data ini ?");
+
+    if (confirmation) {     
         $.ajax({
             url: "http://localhost:8000/api/tim-pegawai/"+id,
             type: "delete",
