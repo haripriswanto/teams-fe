@@ -6,17 +6,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <header>
+    <div class="container">
+        <header class="h1 my-5">
+            Manajemen Tim Pegawai
+        </header>
+        <div class="row mb-3">
+            <div class="col-2">
+                <div class="btn-group" role="group">
+                    <button id="button-add" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-plus-circle"></i> Add
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="button-add">
+                        <li>
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#AddPegawai"><i class="bi bi-person-add"></i> Pegawai</a>
+                        </li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#AddTim"><i class="bi bi-people"></i>  Tim</a></li>
+                    </ul>
+                </div>                
+            </div>
+            <div class="col-8 justify-content-center">
+                <form class="row gx-3 gy-2 align-items-center">
+                    <div class="col-sm-3">
+                      <select class="form-select" id="selectPegawai">
+                        <option selected>Pilih Pegawai</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-3">
+                      <select class="form-select" id="selectTim">
+                        <option selected>Pilih Nama Tim</option>
+                      </select>
+                    </div>
+                    <div class="col-auto">
+                      <button class="btn btn-primary" id="button-tim-pegawai"><i class="bi bi-floppy"></i></button>
+                      <button class="btn btn-primary" id="refresh-button"><i class="bi bi-arrow-clockwise"></i></button>
+                    </div>
+                </form>                
+            </div>
+            <!-- <hr class="my-2"> -->
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Data Tim Pegawai</h5>                
+            </div>
+            <div class="card-body">
+                <table class="table table-border table-hover">
+                    <thead>
+                        <tr>
+                        <th scope="col">Tim ID</th>
+                        <th scope="col">Nama Pegawai</th>
+                        <th scope="col">Nama Tim</th>
+                        <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-table">
+                        <!-- load Data  -->
+                    </tbody>
+                </table>
+            </div>
+          </div>
+    </div>
     
-    </header>
-    <main>
-    
-    </main>
-    <footer>
-    
-    </footer>
+    <!-- Modal Form Add Pegawai  -->
+    <div class="modal fade" id="AddPegawai" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="AddPegawaiLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="AddPegawaiLabel">Form Tambah Pegawai </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-form">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" name="namaPegawai" id="namaPegawai" placeholder="Nama Pegawai" aria-label="Nama Pegawai" autofocus>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button-add-pegawai">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form Add Pegawai  -->
+    <div class="modal fade" id="AddTim" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="AddTimLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="AddTimLabel">Form Tambah Tim </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-form">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" name="namaTim" id="namaTim" placeholder="Nama Tim" aria-label="Nama Tim" autofocus>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button-add-tim">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/script.js"></script>
+
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
 </body>
 </html>
